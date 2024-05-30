@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2024 at 11:29 AM
+-- Generation Time: May 30, 2024 at 04:53 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -132,7 +132,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'Kevhin', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'no_image.png', 1, '2024-05-29 16:06:05'),
+(1, 'Kevhin', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'no_image.png', 1, '2024-05-30 22:46:04'),
 (2, 'John Walker', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.png', 1, '2024-04-26 13:32:05'),
 (3, 'Christopher', 'user', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.png', 1, '2024-04-28 15:54:01'),
 (4, 'Natie Williams', 'natie', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 3, 'no_image.png', 1, NULL);
@@ -183,7 +183,13 @@ CREATE TABLE `warehouse` (
 --
 
 INSERT INTO `warehouse` (`id`, `name`, `barcode`, `quantity`, `low_stock_quantity`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`) VALUES
-(27, 'Hotdog (Tender Juicy Original)', '8PLFZEU96BXR', '10', '1', 100.00, 110.00, 8, 3, '2024-05-29 16:32:20');
+(27, 'Hotdog (Tender Juicy Original)', '8PLFZEU96BXR', '10', '1', 100.00, 110.00, 8, 3, '2024-05-29 16:32:20'),
+(28, 'piatos cheese', '0P8OTIJHRV2U', '100', '10', 14.00, 17.00, 11, 0, '2024-05-30 22:48:19'),
+(29, 'piatos roastbeef', 'YX3Z48HXDCTV', '100', '10', 14.00, 17.00, 11, 0, '2024-05-30 22:48:46'),
+(30, 'piatos sourcream and onion', 'XTXYOLVKEFAN', '100', '10', 14.00, 17.00, 11, 0, '2024-05-30 22:49:46'),
+(31, 'piatos nachoscheese', 'WFL1AY60PNXK', '100', '10', 14.00, 17.00, 11, 0, '2024-05-30 22:52:53'),
+(32, 'piatos spicycheese', '6C17R3OBD05V', '100', '10', 14.00, 17.00, 11, 0, '2024-05-30 22:53:13'),
+(33, 'piatos saltedpotato', '6Z2LCAXQ0W1D', '100', '10', 14.00, 17.00, 11, 0, '2024-05-30 22:53:32');
 
 --
 -- Indexes for dumped tables
@@ -262,7 +268,7 @@ ALTER TABLE `media`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `sales`
@@ -286,7 +292,7 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT for table `warehouse`
 --
 ALTER TABLE `warehouse`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Constraints for dumped tables
