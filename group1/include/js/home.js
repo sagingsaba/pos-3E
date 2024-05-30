@@ -194,7 +194,7 @@ function toggleInput() {
         });
         
         
-        //
+        //r
         function sendBarcodeToPHP(barcodeData) {
     fetch('barcode.php', {
         method: 'POST',
@@ -207,21 +207,23 @@ function toggleInput() {
 
 
 
-        const [id, rest] = data.split(' - '); 
-const [productName, priceStr] = rest.split(' ₱');
-const productPrice = parseFloat(priceStr); 
-// const [id, rest] = data.split(' - '); 
-// const [productDetails, quantityStr] = rest.split(' - ');
-// const [productName, priceStr] = productDetails.split(' ₱');
-// const productPrice = parseFloat(priceStr);
-// const availableQuantity = parseInt(quantityStr, 10);
+//         const [id, rest] = data.split(' - '); 
+// const [productName, priceStr] = rest.split(' ₱');
+// const productPrice = parseFloat(priceSt); 
+const [id, rest] = data.split(' - ');
+const [productName, priceAndQuantity] = rest.split(' ₱');
+const [priceStr, quantityStr] = priceAndQuantity.split(' - ');
 
+// Parse the price and quantity
+const productPrice = parseFloat(priceStr.replace('₱', ''));
+const availableQuantity = parseInt(quantityStr.trim(), 10);
+console.log("id "+id+"rest "+rest+"pn "+productName+"pq "+priceAndQuantity+"prstr "+priceStr+"quan "+quantityStr+"pp "+productPrice+ availableQuantity);
         const existingProductRow = document.querySelector(`#product-table-body tr[data-product-name="${productName}"]`);
         if (existingProductRow) {
             const quantityInput = existingProductRow.querySelector('input[name="productQuantity"]');
             const currentQuantity = parseInt(quantityInput.value);
             const newQuantity = currentQuantity + 1;
-    
+    console.log(newQuantity,availableQuantity);
             if (newQuantity > availableQuantity) {
                 alert(`Cannot add more ${productName}. Available quantity is only ${availableQuantity}.`);
             } else {
@@ -626,6 +628,8 @@ makeReceipt.addEventListener("click", () => {
     .catch(error => {
         console.error('Error clearing session data:', error);
     });
+
+   
 });
 
 
