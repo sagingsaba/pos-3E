@@ -37,7 +37,6 @@ try {
     <div class="navigator">
         <ul>
             <li><a href="home.php">Reports</a></li>
-            <!-- Change "Accounts" to "Employees" and add dropdown -->
             <li class="dropdown">
                 <a class="dropdown-btn active">Employees</a>
                 <div class="dropdown-content">
@@ -47,7 +46,6 @@ try {
                     <a href="totalhour.php">Total Hours Worked</a>
                 </div>
             </li>
-            <!-- Add a logout button -->
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </div>
@@ -65,7 +63,6 @@ try {
         <div class="header">
             <h2>Role and Access Summary</h2>
             <a href="crud/addaccess.php" class="add-employee-btn">Add Role</a>
-            <!-- Add a delete button with onclick event to trigger deletion of selected employees -->
             <button onclick="deleteSelected()">Delete Selected</button>
         </div>
 

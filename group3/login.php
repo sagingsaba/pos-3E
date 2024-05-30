@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         // Get username and password from the form
         $username = $_POST['username'];
-        $password = $_POST['password']; // Assuming the password is submitted via POST
+        $password = $_POST['password']; 
 
         // Prepare SQL statement to fetch user data
         $stmt = $pdo->prepare('SELECT userID, password FROM usercredential WHERE username = ?');
@@ -28,7 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($userData) {
             // Verify the password
             if (password_verify($password, $userData['password'])) {
-                // Set session variables for username and userID
                 $_SESSION['username'] = $username;
                 $_SESSION['userID'] = $userData['userID'];
 
@@ -36,22 +35,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt = $pdo->prepare('INSERT INTO Attendance (userID, clockInTime) VALUES (?, NOW())');
                 $stmt->execute([$userData['userID']]);
 
-                // Get the ID of the last inserted record
                 $attendanceID = $pdo->lastInsertId();
 
-                // Store the attendance ID in the session
                 $_SESSION['attendanceID'] = $attendanceID;
 
-                // Redirect to home page
                 header("Location: home.php");
                 exit();
             } else {
-                // Password does not match
                 header("Location: index.php?error=incorrect_password");
                 exit();
             }
         } else {
-            // User does not exist
             header("Location: index.php?error=user_not_found");
             exit();
         }

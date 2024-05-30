@@ -36,7 +36,6 @@
     <button id="logoutBtn">Log Out</button>
 </div>
 <script>
-    // JavaScript for clock in and clock out functionality
     const clockInBtn = document.getElementById('clockInBtn');
     const clockOutBtn = document.getElementById('clockOutBtn');
     const clockDisplay = document.getElementById('clock');
@@ -65,7 +64,6 @@
         return time.toLocaleTimeString('en-US', { hour12: false });
     }
 
-    // Dummy logout functionality
     logoutBtn.addEventListener('click', () => {
         alert('Logged Out');
         // You can redirect to a logout page or clear session data here
