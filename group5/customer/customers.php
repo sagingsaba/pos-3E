@@ -10,7 +10,7 @@ include '../include/customerSession.php';
     <!-- External CSS -->
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../admincss/customers.css">
+    <link rel="stylesheet" href="../customercss/customers.css">
 </head>
 <body>
     <!-- SIDEBAR -->

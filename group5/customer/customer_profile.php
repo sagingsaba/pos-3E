@@ -1,37 +1,5 @@
-<?php
-require_once '../include/dbcon.php';
-session_start();
-
-if (!isset($_SESSION["Email"])) {
-    header("location:../login.php");
-    exit; 
-}
-
-if (!isset($_GET['id'])) {
-    header("location:customers.php");
-    exit;
-}
-
-$customerId = $_GET['id'];
-
-try {
-
-    $pdoQuery = "SELECT * FROM customer_account WHERE id=:id";
-    $pdoResult = $pdoConnect->prepare($pdoQuery);
-    $pdoResult->execute(['id' => $customerId]);
-    $loyaltyCard = $pdoResult->fetch();
-    
-
-    if (!$loyaltyCard) {
-
-        header("location:customers.php");
-        exit;
-    }
-} catch (PDOException $error) {
-    echo $error->getMessage();
-    exit; 
-}
-
+<?php 
+include '../include/customerSessionProfile.php';
 require_once '../customer_barcode/vendor/autoload.php'; // Include the Composer autoload file
 
 use Picqer\Barcode\BarcodeGeneratorPNG; 
@@ -50,8 +18,8 @@ function generateBarcodeImage($barcode) {
         return false; // Return false if there's an error generating the barcode image
     }
 }
-?>
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,13 +29,14 @@ function generateBarcodeImage($barcode) {
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
-	<link rel="stylesheet" href="../admincss/customers.css">
-    <link rel="stylesheet" href="../admincss/loyalty_card.css">
+	<link rel="stylesheet" href="../customercss/customers.css">
+    <link rel="stylesheet" href="../customercss/customer_profile.css">
 
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<title>AdminHub</title>
 </head>
 <body>
+
+
 		<!-- SIDEBAR -->
 		<section id="sidebar">
 		<a href="#" class="brand">
@@ -125,28 +94,60 @@ function generateBarcodeImage($barcode) {
         <main>
             <div class="head-title">
                 <!-- Head title content -->
-				 		<form id="barcode-form" action="add_loyalty_points.php" method="post">	
-                                <input type="text" name="scannedBarcode" placeholder="Scan barcode...">                  
-                            </div>
-                        </form>
             </div>
-            <ul class="box-info">
-                <li>
-                <div class="loyalty-card">
-                    <div class="header">
-                        <h2><?php echo $loyaltyCard['FullName']; ?></h2>
-                    </div>
-                    <div class="content">
+            
+                    <div class="container">
+						<div class="profile-card">
+							<div class="profile-picture">
+								<?php
+									if (!empty($customer['profpic'])) {
+										echo '<img src="../uploaded_image/' . $customer['profpic'] . '" class="profile-image">';
+									} else {
+										echo '<img src="../image/default_profile.png" class="profile-image">';
+									}
+								?>
+								
+							</div>
+							
+							<div class="profile-details">
+								
+								<div class="profile-header">
+									<h3><div class="profile-value"><?php echo $customer['FullName']; ?></div></h3>
+								</div>
+								<div class="profile-label">Email:</div>
+								<div class="profile-value"><?php echo $customer['Email']; ?></div>
 
-                        <img src="Picsart_24-03-29_12-28-55-400.png" alt="" class="loyalty-picture">
+								<div class="profile-label">Address:</div>
+								<div class="profile-value"><?php echo $customer['Address']; ?></div>
 
-                        <h3>Banana Loyalty Card</h3>
+								<div class="profile-label">Contact:</div>
+								<div class="profile-value"><?php echo $customer['Contact']; ?></div>	
 
-                        <div class="barcode-container">
-						<?php if (!empty($loyaltyCard['barcode_image'])): ?>
+								<div class="profile-label">Notes:</div>
+								<div class="profile-value"><?php echo $customer['Notes']; ?></div>
+
+								<div class="row">
+									<div class="column">
+										<div class="profile-label">Total Visits</div>
+										<div class="profile-value"><?php echo $customer['TotalVisits']; ?></div>
+									</div>
+
+									<div class="column">
+										<div class="profile-label">Loyalty Points</div>
+										<div class="profile-value"><?php echo $customer['LoyaltyPoints']; ?></div>
+									</div>
+
+									<div class="column">
+										<div class="profile-label">Purchase Total</div>
+										<div class="profile-value"><?php echo $customer['TotalPurchase']; ?></div>
+									</div>
+								</div>
+
+								<?php if (!empty($customer['barcode_image'])): ?>
+									<div class="profile-label">Barcode:</div>
 									<div class="profile-value">
 										<?php 
-										$barcodeImage = generateBarcodeImage($loyaltyCard['barcode_image']);
+										$barcodeImage = generateBarcodeImage($customer['barcode_image']);
 										if ($barcodeImage !== false): ?>
 											<img src="data:image/png;base64,<?php echo base64_encode($barcodeImage); ?>" class="barcode">
 										<?php else: ?>
@@ -154,14 +155,20 @@ function generateBarcodeImage($barcode) {
 										<?php endif; ?>
 									</div>
 								<?php else: ?>
+									<div class="profile-label">Barcode:</div>
 									<div class="profile-value">No barcode available.</div>
 								<?php endif; ?>
-                        </div>
-                        
-                    </div>
-                </div>
-
-                        </div>
+							<!-- Buttons -->
+							<div class="buttons-container">
+								<a href="../crud/updatecustomer.php?id=<?php echo $customer['id']; ?>" class="button-navigator">Edit profile</a>
+								<a href="customer_history.php?id=<?php echo $customer['id']; ?>" class="button-navigator">View History</a>
+								<a href="loyalty_card.php?id=<?php echo $customer['id']; ?>" class="button-navigator">Redeem Points</a>
+								<a href="loyalty_card.php?id=<?php echo $customer['id']; ?>" class="button-navigator">Loyalty Card</a>
+							</div>
+								 
+							</div>
+							
+						</div>
                     </div>
                 </li>
             </ul>
@@ -170,7 +177,5 @@ function generateBarcodeImage($barcode) {
 	</section>
 	<!-- CONTENT -->
 	<script src="script.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 </body>
 </html>
