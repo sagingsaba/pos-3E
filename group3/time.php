@@ -35,7 +35,6 @@ try {
     <div class="navigator">
         <ul>
             <li><a href="home.php">Reports</a></li>
-            <!-- Change "Accounts" to "Employees" and add dropdown -->
             <li class="dropdown">
                 <a class="dropdown-btn active">Employees</a>
                 <div class="dropdown-content">
@@ -45,7 +44,6 @@ try {
                     <a href="totalhour.php">Total Hours Worked</a>
                 </div>
             </li>
-            <!-- Add a logout button -->
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </div>
