@@ -194,7 +194,7 @@ function toggleInput() {
         });
         
         
-        //r
+        //
         function sendBarcodeToPHP(barcodeData) {
     fetch('barcode.php', {
         method: 'POST',
@@ -209,31 +209,36 @@ function toggleInput() {
 
 //         const [id, rest] = data.split(' - '); 
 // const [productName, priceStr] = rest.split(' ₱');
-// const productPrice = parseFloat(priceSt); 
+// const productPrice = parseFloat(priceStr); 
 const [id, rest] = data.split(' - ');
 const [productName, priceAndQuantity] = rest.split(' ₱');
 const [priceStr, quantityStr] = priceAndQuantity.split(' - ');
+const productPrice = parseFloat(priceStr);
+const availableQuantity = parseInt(quantityStr, 10);
 
-// Parse the price and quantity
-const productPrice = parseFloat(priceStr.replace('₱', ''));
-const availableQuantity = parseInt(quantityStr.trim(), 10);
-console.log("id "+id+"rest "+rest+"pn "+productName+"pq "+priceAndQuantity+"prstr "+priceStr+"quan "+quantityStr+"pp "+productPrice+ availableQuantity);
         const existingProductRow = document.querySelector(`#product-table-body tr[data-product-name="${productName}"]`);
         if (existingProductRow) {
             const quantityInput = existingProductRow.querySelector('input[name="productQuantity"]');
             const currentQuantity = parseInt(quantityInput.value);
             const newQuantity = currentQuantity + 1;
-    console.log(newQuantity,availableQuantity);
-            if (newQuantity > availableQuantity) {
-                alert(`Cannot add more ${productName}. Available quantity is only ${availableQuantity}.`);
-            } else {
+  
+
                 quantityInput.value = newQuantity;
     
                 const totalPriceCell = existingProductRow.querySelector('.total-price');
                 const newTotalPrice = parseFloat(totalPriceCell.dataset.price) + productPrice;
                 totalPriceCell.dataset.price = newTotalPrice;
                 totalPriceCell.textContent = '₱' + newTotalPrice.toFixed(2);
-            }
+
+                quantityInput.addEventListener('input', function() {
+                    const newQuantity = parseInt(this.value);
+                    if (newQuantity > availableQuantity) {
+                        alert(`Cannot add more ${productName}. Available quantity is only ${availableQuantity}.`);
+                       
+                        this.value = 1;
+                    }
+                });
+    
         } else {
             
             const tableRow = document.createElement('tr');
@@ -496,23 +501,23 @@ function getreceipt(receiptId,productIds, subTotal, dis,vat, total,pay,amount,cc
 
   return JSON.stringify(receipts);
 }
-function getbills(name, email, productIds, subTotal, dis, total) {
-  let subValue = parseFloat(subTotal.split("₱")[1]);
-  let totalValue = parseFloat(total.split("₱")[1]);
+// function getbills(name, email, productIds, subTotal, dis, total) {
+//   let subValue = parseFloat(subTotal.split("₱")[1]);
+//   let totalValue = parseFloat(total.split("₱")[1]);
 
-  const bills = {
-    name: name,
-    email: email,
-    productIds: productIds,
-    subtot: subValue,
-    discount: dis,
-    tot: totalValue
-  };
+//   const bills = {
+//     name: name,
+//     email: email,
+//     productIds: productIds,
+//     subtot: subValue,
+//     discount: dis,
+//     tot: totalValue
+//   };
   
  
 
-  return JSON.stringify(bills);
-}
+//   return JSON.stringify(bills);
+// }
 
 
 let receipts;
@@ -629,9 +634,23 @@ makeReceipt.addEventListener("click", () => {
         console.error('Error clearing session data:', error);
     });
 
-   
+    fetch('updateInventory.php', {
+        method: 'POST',  headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+           productIds:productIds
+        })
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log('Session data updated:', data);
+    
+    })
+    .catch(error => {
+        console.error('Error clearing session data:', error);
+    });
 });
-
 
 
 

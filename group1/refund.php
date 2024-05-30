@@ -8,24 +8,19 @@ $loggedemail = $_SESSION['email'];
 require_once "include/connect/dbcon.php";
 
 $fetch_data = []; // Initialize fetch_data as an empty array
-
+if (isset($_POST['reason'])) {
+    $refund = $_POST['reason'];
+}
 if (isset($_POST['search'])) {
     $receipt = $_POST['receipt'];
     if (empty($receipt)) {
         echo "Please input a receipt ID";
     } else {
         // Adjusted SQL query to fetch item name and sale price from the warehouse table
-        $sql = "SELECT 
-                    ri.item_id,
-                    ri.quantity,
-                    w.name AS item_name,
-                    w.sale_price
-                FROM 
-                    receipt_item ri
-                JOIN 
-                    warehouse w ON ri.item_id = w.id
-                WHERE
-                    ri.receipt_id = ?";
+        $sql = "SELECT ri.id AS receipt_item_id, ri.receipt_id, ri.quantity, p.id AS product_id, p.name, p.sale_price
+        FROM receipt_item AS ri
+        JOIN products AS p ON ri.item_id = p.id
+        WHERE ri.receipt_id = ?";
         
         $stmt = $pdoConnect->prepare($sql);
         $stmt->execute([$receipt]);
@@ -63,47 +58,64 @@ if (isset($_POST['search'])) {
 <div class="form" style="margin-top:4%">
     <h2 style="display: block; text-align: center; margin-bottom: 12%;">Refund:</h2>
     <!-- Form for searching receipts -->
-    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-        <input type="text" name="receipt" placeholder="Enter receipt id">
+    <form method="post">
+    <div>
+        <label for="receipt">Receipt ID:</label>
+        <input type="text" name="receipt" id="receipt" placeholder="Enter receipt id">
         <input type="submit" name="search" value="Search">
-    </form>
+    </div>
+    
+    <div>
+        <label for="reason_id">Reason:</label>
+        <select name="reason" id="reason_id" class="custom-select" style="margin: 4%;">
+            <option value="Expired or spoiled product">Expired or spoiled product</option>
+            <option value="Incorrect item received">Incorrect item received</option>
+            <option value="Product damaged during transportation">Product damaged during transportation</option>
+            <option value="Dissatisfied with product quality">Dissatisfied with product quality</option>
+            <option value="Product packaging damaged or tampered">Product packaging damaged or tampered</option>
+            <option value="Unwanted or unused item">Unwanted or unused item</option>
+            <option value="Product not as described">Product not as described</option>
+            <option value="Product past its sell-by date">Product past its sell-by date</option>
+            <option value="Product contaminated or foreign object found">Product contaminated or foreign object found</option>
+            <option value="Allergic reaction to product">Allergic reaction to product</option>
+            <option value="Product missing from order">Product missing from order</option>
+            <option value="Overcharged for item">Overcharged for item</option>
+            <option value="Change of mind">Change of mind</option>
+            <option value="Duplicate purchase">Duplicate purchase</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+
+    <input type="submit" name="refund" value="Submit" class="main-button" style="color: black; margin-top: 4%;">
+</form>
+
     <?php 
-    if (isset($_POST['search'])) {
-        if (empty($fetch_data)) {
-            echo "Receipt not found.";
-        } else {
-            // Display receipt details
-            echo "<h3>Receipt ID: " . htmlspecialchars($receipt) . "</h3>";
-            echo "<table border='1'>
-                    <tr>
-                        <th>Item name</th>
-                        <th>Item price</th>
-                        <th>Quantity</th>
-                        <th>Action</th>
-                    </tr>";
-            foreach ($fetch_data as $item) {
-                echo "<tr>
-                        <td>" . htmlspecialchars($item['item_name']) . "</td>
-                        <td>" . htmlspecialchars($item['sale_price']) . "</td>
-                        <td>" . htmlspecialchars($item['quantity']) . "</td>
-                        <td><a href=\"refundprocess.php?item_id=" . htmlspecialchars($item['item_id']) . "&receipt_id=" . htmlspecialchars($receipt) . "&item_name=" . urlencode($item['item_name']) . "&sale_price=" . urlencode($item['sale_price']) . "&quantity=" . urlencode($item['quantity']) . "\">Refund</a></td>
-                      </tr>";
-            }
-            echo "</table>";
+    if (!empty($fetch_data)) {
+        // Display receipt details
+        echo "<h3>Receipt ID: " . htmlspecialchars($receipt) . "</h3>";
+        echo "<table border='1'>
+                <tr>
+                    <th>Item name</th>
+                    <th>Item price</th>
+                    <th>Quantity</th>
+                    <th>Action</th>
+                </tr>";
+        foreach ($fetch_data as $item) {
+            echo "<tr>
+                    <td>" . htmlspecialchars($item['name']) . "</td>
+                    <td>" . htmlspecialchars($item['sale_price']) . "</td>
+                    <td>" . htmlspecialchars($item['quantity']) . "</td>
+                    <td><form action='refundprocess.php' method='POST'>
+                    <input type='hidden' name='receipt_item_id' value='" . htmlspecialchars($item['receipt_item_id']) . "'>
+                    <input type='hidden' name='reason' value='".$refund."'>
+                    <input type='submit' name='refund' value='Refund'>
+                </form></td>
+                  </tr>";
         }
+        echo "</table>";
     }
     ?>
-    <!-- Form for refund -->
-    <form method="post">
-        Reason:
-        <select name="reason" id="reason_id" class="custom-select" style="margin: 4%;">
-            <option value="Change of mind">Change of mind</option>
-            <option value="Defect">Defective Item</option>
-            <option value="Others">Others</option>
-        </select>
-        
-        <input type="submit" name="refund" value="Submit" class="main-button" style="color: black;">
-    </form>
+
 
     <!-- Displaying receipt details -->
    
