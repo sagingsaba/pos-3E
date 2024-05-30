@@ -106,19 +106,7 @@
                     <button name="login">Login</button>
                 </form>
             </div>
-    
-            <div class="login">
-                <form method="post">
-                    <label for="chk" aria-hidden="true">Sign Up</label>
-                    <input type="text" name="regFullname" placeholder="Fullname">
-                    <input type="email" name="regEmail" placeholder="Email" required="">
-                    <input type="password" name="regPassword" placeholder="Password">
-                    <input type="password" name="regConfirmpass" placeholder="Confirm Password">
-                    <input type="submit" name="register" class ="buttonn" value="Sign up">
-                </form>
-            </div>
         </div>
-    
         <script type="text/javascript">
             function preventBack(){window.history.forward()};
             setTimeout("preventBack()", 0);
