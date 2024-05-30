@@ -1,0 +1,122 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+:root {
+  --poppins: "Poppins", sans-serif;
+  --lato: "Lato", sans-serif;
+
+  --light: #f9f9f9;
+  --blue: #3c91e6;
+  --light-blue: #cfe8ff;
+  --grey: #eee;
+  --dark-grey: #aaaaaa;
+  --dark: #342e37;
+  --red: #db504a;
+  --yellow: #ffce26;
+  --light-yellow: #fff2c6;
+  --orange: #fd7238;
+  --light-orange: #ffe0d3;
+}
+
+body {
+  font-family: var(--poppins);
+  background-color: var(--light-yellow);
+}
+
+/* Profile Card */
+.container {
+  width: 650px;
+  margin: 10px auto;
+}
+
+.profile-card {
+  background-color: #fffde7;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.profile-card .profile-picture {
+  text-align: center;
+}
+
+.profile-card .profile-picture img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-card .profile-header h3 {
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--dark);
+  margin-bottom: 10px;
+}
+
+.profile-card .profile-label {
+  font-size: 16px;
+  color: var(--dark-grey);
+  margin-top: 10px;
+}
+
+.profile-card .profile-value {
+  font-size: 16px;
+  color: var(--dark);
+  margin-bottom: 10px;
+}
+
+.profile-card .row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-card .column {
+  flex: 1;
+  margin: 0 10px;
+}
+
+.profile-card .barcode {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+.buttons-container {
+  margin-top: 20px;
+}
+
+.button-navigator {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-right: 10px;
+  border-radius: 20px;
+  background-color: var(--blue);
+  color: #fffde7;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.button-navigator:hover {
+  background-color: #2975a3;
+}
+
+.logout {
+  color: var(--red);
+}
