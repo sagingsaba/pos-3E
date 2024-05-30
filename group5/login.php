@@ -27,20 +27,8 @@
               $pdoQuery = "INSERT INTO `audit_trail`(`action`,`user`)VALUES('User logged in',:user)";
               $pdoResult = $pdoConnect->prepare($pdoQuery);
               $pdoResult->execute([':user' => $loggedInUser]);
-              header("location:admin/dashboard.php");
-            }else{
-              $pdoQuery = $pdoConnect->prepare("UPDATE counter SET visits = visits+1, tvisit = tvisit+1, date = now() where id = 1");
-              $pdoResult = $pdoQuery->execute();
-              $pdoQuery = $pdoConnect->prepare("UPDATE usertb_account SET totalVisits = totalVisits+1, LoyaltyPoints = LoyaltyPoints+1 where Email = :Email");
-              $pdoQuery->execute(['Email' => $_POST["Email"]]);
-              
-
-              $loggedInUser = $_SESSION["Email"];
-              $pdoQuery = "INSERT INTO `audit_trail`(`action`,`user`)VALUES('User logged in',:user)";
-              $pdoResult = $pdoConnect->prepare($pdoQuery);
-              $pdoResult->execute([':user' => $loggedInUser]);
-              header("location:customer/dashboard_customer.php");
-              }
+              header("location:customer/dashboard.php");
+            }
         }else{
             $message = "<label>Incorrect Username or Password<label>";
         }

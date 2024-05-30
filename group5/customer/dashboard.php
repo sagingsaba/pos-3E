@@ -10,7 +10,7 @@ include '../include/customerSessionDashboard.php';
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
-	<link rel="stylesheet" href="../admincss/styles.css">
+	<link rel="stylesheet" href="../customercss/styles.css">
 	<!-- Chart -->
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<title>AdminHub</title>
