@@ -19,10 +19,11 @@ if ($_POST['scannedBarcode']) {
             // Increment loyalty points by 1
             $newPoints = $currentPoints + 1;
             $newVisitsPoints = $currentVisits + 1;
+
             //update today visits
-            
             $pdoQuery = $pdoConnect->prepare("UPDATE counter SET visits = visits+1, tvisit = tvisit+1, date = now() where id = 1");
             $pdoResult = $pdoQuery->execute();
+            
             // Update customer loyalty points
             $updateQuery = "UPDATE customer_account SET LoyaltyPoints = :points, TotalVisits = :visits WHERE id = :id";
             $updateResult = $pdoConnect->prepare($updateQuery);
