@@ -92,8 +92,8 @@ if (!empty($_POST['modify'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AdminHub</title>
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../admincss/styles.css">
-    <link rel="stylesheet" href="../admincss/update.css">
+    <link rel="stylesheet" href="../customercss/styles.css">
+    <link rel="stylesheet" href="../customercss/update.css">
 </head>
 <body>
     <section id="sidebar">
