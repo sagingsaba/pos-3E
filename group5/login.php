@@ -1,11 +1,8 @@
 <?php
  session_start();
  require_once './include/dbcon.php';
- require_once './customer_barcode/vendor/autoload.php'; // Include the Composer autoload file
 
- use Picqer\Barcode\BarcodeGeneratorPNG;
 
- 
  try{
     $pdoConnect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -35,48 +32,6 @@
         }
             }
     }catch(PDOException $error){
-        $message = $error->getMessage();
-    }
-
-    try {
-        $pdoConnect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
-        if (isset($_POST["register"])) {
-            if ($_POST['regPassword'] !== $_POST['regConfirmpass']) {
-                $message = "<label>Password Doesn't Match</label>";
-            } else {
-                $FullName = $_POST['regFullname'];
-                $Email = $_POST['regEmail'];
-                $Password = password_hash($_POST['regPassword'], PASSWORD_DEFAULT);
-                $usertype = "0";
-                $Barcode = uniqid(); // Generate unique ID for barcode
-                $BarcodeImagePath = 'uploaded_image/barcodes_img/' . $Barcode . '.png'; // Path to store barcode image
-                
-                // Generate barcode image
-                $generator = new BarcodeGeneratorPNG();
-                file_put_contents($BarcodeImagePath, $generator->getBarcode($Barcode, $generator::TYPE_CODE_128));
-                
-                // Insert user data into database
-                $pdoQuery = "INSERT INTO `usertb_account`(`FullName`,`Email`,`PassWord`,`usertype`, `barcode_image`) 
-                             VALUES (:FullName, :Email, :PassWord, :usertype, :barcode_image)";
-                $pdoResult = $pdoConnect->prepare($pdoQuery);
-                $pdoExec = $pdoResult->execute([
-                    ":PassWord" => $Password,
-                    ":FullName" => $FullName,
-                    ":Email" => $Email,
-                    ":usertype" => $usertype,
-                    ":barcode_image" => $BarcodeImagePath, 
-                ]);
-                
-                if ($pdoExec) {
-                    
-                    header("location:login.php");
-                } else {
-                    $message = 'Failed to register user.';
-                }
-            }
-        }
-    } catch (PDOException $error) {
         $message = $error->getMessage();
     }
     ?>

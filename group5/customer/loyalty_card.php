@@ -127,7 +127,6 @@ function generateBarcodeImage($barcode) {
                 <!-- Head title content -->
 				 		<form id="barcode-form" action="add_loyalty_points.php" method="post">	
                                 <input type="text" name="scannedBarcode" placeholder="Scan barcode...">                  
-                            </div>
                         </form>
             </div>
             <ul class="box-info">

@@ -25,7 +25,7 @@ require_once '../include/dbcon.php';
             $pdoQuery = "INSERT INTO `audit_trail`(`action`,`user`)VALUES('User Deleted',:user)";
             $pdoResult = $pdoConnect->prepare($pdoQuery);
             $pdoResult->execute([':user' => $loggedInUser]);
-        header('location:../admin/customers.php');
+        header('location:../customer/customers.php');
         }
     }else{
         

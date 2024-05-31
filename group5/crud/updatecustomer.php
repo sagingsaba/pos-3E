@@ -72,7 +72,7 @@ if (!empty($_POST['modify'])) {
             $pdoResult->execute([':user' => $loggedInUser]);
             
             // Redirect to customer list page after successful update
-            header('location:../admin/customers.php');
+            header('location:../customer/customers.php');
             exit;
         } else {
             $message = 'Failed to update customer information.';
@@ -177,7 +177,7 @@ if (!empty($_POST['modify'])) {
                         </div>
                     </div>
                     <input type="submit" name="modify" value="Save Changes" class="btn">
-                    <a href="../admin/customers.php" class="delete-btn">Cancel</a>
+                    <a href="../customer/customers.php" class="delete-btn">Cancel</a>
                 </form>
             </div>
         </main>

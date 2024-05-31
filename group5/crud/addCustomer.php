@@ -13,7 +13,7 @@ try {
                 $Contact = $_POST['regContact'];
                 $Address = $_POST['regAddress'];
                 
-                //$Barcode = "!". "2024".(rand(0,999999999));
+                //$Barcode = "!". "2024".(rand(0,999999999)); random barcode
                 $Barcode = $_POST['addBarcode'];
 
 
@@ -32,7 +32,7 @@ try {
                 
                 if ($pdoExec) {
                     
-                    header("location:../admin/customers.php");
+                    header("location:../customer/customers.php");
                 } else {
                     $message = 'Failed to register user.';
                 }
@@ -52,8 +52,8 @@ try {
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <!-- My CSS -->
-    <link rel="stylesheet" href="../admincss/styles.css">
-    <link rel="stylesheet" href="../admincss/addCustomer.css">
+    <link rel="stylesheet" href="../customercss/styles.css">
+    <link rel="stylesheet" href="../customercss/addCustomer.css">
     <!-- Chart -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>AdminHub</title>

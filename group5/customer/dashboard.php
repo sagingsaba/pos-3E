@@ -128,7 +128,7 @@ include '../include/customerSessionDashboard.php';
 					</div>
 					<?php
 						try {
-							$pdoQuery = 'SELECT * FROM customer_account ORDER BY TotalPurchase DESC LIMIT 1';
+							$pdoQuery = 'SELECT * FROM customer_account ORDER BY LoyaltyPoints DESC LIMIT 1';
 							$pdoResult = $pdoConnect->prepare($pdoQuery);
 							$pdoResult->execute();
 							$topCustomer = $pdoResult->fetch(PDO::FETCH_ASSOC);
