@@ -40,31 +40,41 @@ if (isset($_POST['refundbtn'])) {
             echo "Invalid quantity. Please check your inputted quantity";
         } else {
             $update_quantity = $available_quantity + $user_quantity;
-
+            $remaining_quantity = $quantity - $user_quantity;
+        
             // Update product quantity
             $sql_update_products = "UPDATE products
                                     SET quantity = ?
                                     WHERE id = ?";
             $stmt_update_products = $pdoConnect->prepare($sql_update_products);
             $stmt_update_products->execute([$update_quantity, $product_id]);
-
+        
             // Store in session
             $total =  $user_quantity * $price;
             $_SESSION['refunds'] += $total ?? 0; 
-
-            // Update item refunded
-            $sqlstatus = "UPDATE receipt_item
-                          SET `status` = ? 
-                          WHERE id = ?";
-            $stmtstatus = $pdoConnect->prepare($sqlstatus);
-            $stmtstatus->execute(["refunded", $receipt_item_id]);
-
+        
+            if ($remaining_quantity == 0) {
+                // Update item as fully refunded
+                $sql_update_receipt_item = "UPDATE receipt_item
+                                            SET `status` = ?
+                                            WHERE id = ?";
+                $stmt_update_receipt_item = $pdoConnect->prepare($sql_update_receipt_item);
+                $stmt_update_receipt_item->execute(["refunded", $receipt_item_id]);
+            } else {
+                // Update item with remaining quantity
+                $sql_update_receipt_item = "UPDATE receipt_item
+                                            SET `status` = ?, quantity = ?
+                                            WHERE id = ?";
+                $stmt_update_receipt_item = $pdoConnect->prepare($sql_update_receipt_item);
+                $stmt_update_receipt_item->execute(["sold", $remaining_quantity, $receipt_item_id]);
+            }
+        
             // Insert into refund_items
             $sql_insert_refund = "INSERT INTO refund_items (receipt_item_id, refund_quantity, cashier_id, timestamps, reason) 
                                   VALUES (?,?,?,?,?)";
             $stmt_insert_refund = $pdoConnect->prepare($sql_insert_refund);
             $stmt_insert_refund->execute([$receipt_item_id, $user_quantity, $cashier, $timestamp, $reason]);
-
+        
             echo "Success: Refund completed";
         }
     } else {
