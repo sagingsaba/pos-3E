@@ -154,7 +154,7 @@ button:disabled{
 </select>
 
     <p id="vat">VAT: <?php echo $vat['tax_percent'];?>%</p>
-    <button id="open-ticket-button">Save Table</button>
+    <!-- <button id="open-ticket-button">Save Table</button> -->
     <button id="total-button" class="main-button" >Total</button>
     <h2 id="gtotal">Total: ₱0.00</h2>
     </div>
@@ -162,7 +162,7 @@ button:disabled{
     <select name="paymentmethod" id="paymentmethod" class="custom-select" disabled>
     <option value="">Select here</option>
 <option value="Cash">Cash</option>
-<option value="Gcash">Gcash</option>
+<option value="epay">E-pay</option>
     </select>
     
     <div id="cash" style="display: none;">
@@ -171,8 +171,11 @@ button:disabled{
     <button id="changebtn" disabled>Change</button>
     <p id="cchange">Change:</p>
     </div>
-   <button id="gcash" style="display: none;">E - wallet</button> <br><br> 
-    <button id="make-receipt" disabled>Make a receipt</button>
+
+   <button id="epay" style="display: none;">E - wallet</button> <br><br> 
+    
+   <button id="make-receipt" disabled>Make a receipt</button>
+
     <!-- <button id="paylater" disabled>Add to Pay Later</button>
     <button id="opentickets">View Open Tickets</button> -->
     <button id="toggleButton" class="main-button" onclick="toggleInput()">Banana Card</button>

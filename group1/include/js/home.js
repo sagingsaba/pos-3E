@@ -1,86 +1,49 @@
 
-const openTicketButton = document.getElementById('open-ticket-button');
-openTicketButton.addEventListener('click', () => {
-    var customerName = prompt("Enter customer name:");
-    if (customerName === null || customerName.trim() === "") {
-        alert("Customer name cannot be empty.");
-        return;
-    }
+// const openTicketButton = document.getElementById('open-ticket-button');
+// openTicketButton.addEventListener('click', () => {
+//     var customerName = prompt("Enter customer name:");
+//     if (customerName === null || customerName.trim() === "") {
+//         alert("Customer name cannot be empty.");
+//         return;
+//     }
 
     
     
-    const productRows = document.querySelectorAll('#product-table-body tr');
-    const ticketData = [];
-    productRows.forEach(row => {
-        const productName = row.dataset.productName;
-        const productPrice = parseFloat(row.querySelector('td:nth-child(3)').textContent.replace('₱', ''));
-        const quantity = parseInt(row.querySelector('input[name="productQuantity"]').value);
+//     const productRows = document.querySelectorAll('#product-table-body tr');
+//     const ticketData = [];
+//     productRows.forEach(row => {
+//         const productName = row.dataset.productName;
+//         const productPrice = parseFloat(row.querySelector('td:nth-child(3)').textContent.replace('₱', ''));
+//         const quantity = parseInt(row.querySelector('input[name="productQuantity"]').value);
         
-        // Store each item in ticketData array
-        ticketData.push({
-            customerName: customerName,
-            itemName: productName,
-            itemPrice: productPrice,
-            quantity: quantity
-        });
-    });
+//         // Store each item in ticketData array
+//         ticketData.push({
+//             customerName: customerName,
+//             itemName: productName,
+//             itemPrice: productPrice,
+//             quantity: quantity
+//         });
+//     });
 
-console.log(ticketData);
-    // Send ticket data to server
-    fetch('save_table.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(ticketData)
-    })
-    .then(response => response.text())
-    .then(data => {
-        console.log('Data stored in session:', data);
-    })
-    .catch(error => {
-        console.error('Error storing data:', error);
-    });
-});
+// console.log(ticketData);
+//     // Send ticket data to server
+//     fetch('save_table.php', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(ticketData)
+//     })
+//     .then(response => response.text())
+//     .then(data => {
+//         console.log('Data stored in session:', data);
+//     })
+//     .catch(error => {
+//         console.error('Error storing data:', error);
+//     });
+// });
 //ddddddd
 
-const epaybtn = document.getElementById('gcash');
-epaybtn.addEventListener('click', () => {
-  const tottxt = document.getElementById('gtotal').textContent;
-  const totvalue = parseFloat(tottxt.split("₱")[1]);
-  console.log("Total Value:", totvalue); // Check the value in the console
-
-  // Check if totvalue is valid
-  if (isNaN(totvalue)) {
-    console.error("Invalid total value:", tottxt);
-    return;
-  }
-
-  // Prepare JSON data
-  const jsonData = { amount: totvalue };
-  console.log(jsonData);
-
-  // Send data via fetch
-  fetch('transaction.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(jsonData)
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('Data stored in session:', data);
-  })
-  .catch(error => {
-    console.error('Error storing data:', error.message);
-  });
-});
 
 
 
@@ -127,15 +90,15 @@ const manualsearch = document.getElementById("manualsearch");
 
     const paymentMethodSelect = document.getElementById("paymentmethod");
     const cashDiv = document.getElementById("cash");
-    const gcashButton = document.getElementById("gcash");
+    const epayButton = document.getElementById("epay");
 
     // Add event listener to select element
     paymentMethodSelect.addEventListener("change", function() {
         const selectedOption = paymentMethodSelect.value;
 
-        // Hide both cash and gcash elements initially
+        // Hide both cash and epay elements initially
         cashDiv.style.display = "none";
-        gcashButton.style.display = "none";
+        epayButton.style.display = "none";
 
         // Show the respective element based on the selected option
         if (selectedOption === "Cash") {
@@ -143,9 +106,9 @@ const manualsearch = document.getElementById("manualsearch");
             document.getElementById('cpayment').disabled = false;
     document.getElementById('changebtn').disabled = false;
 
-        } else if (selectedOption === "Gcash") {
-            gcashButton.style.display = "block";
-            document.getElementById('gcash').disabled = false;
+        } else if (selectedOption === "epay") {
+            epayButton.style.display = "block";
+            document.getElementById('epay').disabled = false;
             document.getElementById('make-receipt').disabled = false;
 
         }
@@ -596,6 +559,19 @@ function generateReceiptID() {
 }
 
 makeReceipt.addEventListener("click", () => {
+//clear receipt
+    document.getElementById("cname").value = "";
+    document.getElementById("refs").textContent = "Ref no: ";
+    document.getElementById("cemail").value = "";
+    document.getElementById("tabless").innerHTML = "";
+    document.getElementById("subtot").innerText = "Sub Total: ₱0.00";
+    document.getElementById("disc").innerText = "Discount: ";
+    document.getElementById("tot").innerText = "Total: ₱0.00";
+    document.getElementById("mop").innerText = "Pay thru: ";
+    document.getElementById("amp").innerText = "Amount paid:";
+    document.getElementById("pchange").innerText = "";
+
+
     const tableRows = document.querySelectorAll('#product-table-body tr');
     const rowData = [];
     const productIds = []; // Reset productIds array each time the button is clicked
@@ -654,8 +630,8 @@ makeReceipt.addEventListener("click", () => {
     const totalValue = parseFloat(gTotalElement.split("₱")[1]);
     const refsText = "Ref no: " + generatedReceipt;
     const mopText = "Pay thru: " + pm;
-    const ampText = "Amount paid: ₱" + (pm === "E-payment" ? totalValue : paid);
-    const pchangeText = (pm === "Gcash" ? "Change: ₱0" : cuschange);
+    const ampText = "Amount paid: ₱" + (pm === "epay" ? totalValue : paid);
+    const pchangeText = (pm === "epay" ? "Change: ₱0" : cuschange);
     const subtotText = totalValueElement;
     const discText = selectedOptionText;
     const totText = gTotalElement;
@@ -673,7 +649,7 @@ makeReceipt.addEventListener("click", () => {
 
         receipts = getreceipt(
             generatedReceipt, productIds, totalValueElement, selectedOptionText,
-            vatNum, gTotalElement, pm, pm === "Gcash" ? gTotalElement : paid, pm === "Gcash" ? 'Change: ₱0' : cuschange
+            vatNum, gTotalElement, pm, pm === "epay" ? gTotalElement : paid, pm === "epay" ? 'Change: ₱0' : cuschange
         );
     }
     sendtoprocess(receipts);
@@ -687,6 +663,7 @@ makeReceipt.addEventListener("click", () => {
     document.getElementById('cpayment').value = '';
     document.getElementById('print').disabled = false;
     document.getElementById('make-receipt').disabled = true;
+    document.getElementById('paymentmethod').value = "";
 
     fetch('clearSessionData.php', {
         method: 'POST'
@@ -838,5 +815,74 @@ setInterval(updateDate, 1000);
 // opentickets.addEventListener('click', () =>{
 //     window.location.href = 'paylater.php';
 // })
+document.addEventListener('DOMContentLoaded', () => {
+    const payButton = document.getElementById('epay');
+
+    payButton.addEventListener('click', () => {
+        const totalAmountElement = document.getElementById('gtotal');
+        const totalAmountText = totalAmountElement.textContent;
+        const amountValue = parseFloat(totalAmountText.replace('Total: ₱', ''));
+
+        if (isNaN(amountValue)) {
+            console.error('Invalid total amount:', totalAmountText);
+            return;
+        }
+
+        const jsonData = { amount: amountValue };
+
+        fetch('transaction.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Server response:', data);
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
+    });
+});
+
+
+// const epaybtn = document.getElementById('epay');
+// epaybtn.addEventListener('click', () => {
+//   const tottxt = document.getElementById('gtotal').textContent;
+//   const totvalue = parseFloat(tottxt.split("₱")[1]);
+//   console.log("Total Value:", totvalue); // Check the value in the console
+
+//   const jsonData = { 
+//     amount: totvalue,
+//     amounttxt: tottxt
+//   };
+//   console.log('Sending data:', jsonData);
+//  const jsonDatastr = JSON.stringify(jsonData);
+//  console.log('Sending data:', jsonDatastr);
+
+//   fetch('trans.php', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: jsonDatastr
+   
+//   })
+//   .then(response => {
+//     if (!response.ok) {
+//       throw new Error('Network response was not ok');
+//     }
+//     return response.json();
+//   })
+//   .then(data => {
+//     console.log('Data stored in session:', data);
+//   })
+//   .catch(error => {
+//     console.error('Error storing data:', error.message);
+//   });
+// });
+
 
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Jun 06, 2024 at 10:18 AM
+-- Generation Time: Jun 06, 2024 at 02:46 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -196,7 +196,7 @@ INSERT INTO `audit_trail` (`id`, `action`, `user`, `timestamp`) VALUES
 --
 
 CREATE TABLE `cash_management` (
-  `id` int(255) NOT NULL,
+  `id` int(11) NOT NULL,
   `cashier_id` int(11) NOT NULL,
   `start_amount` int(11) NOT NULL,
   `payments` float(10,2) NOT NULL,
@@ -213,8 +213,8 @@ CREATE TABLE `cash_management` (
 --
 
 INSERT INTO `cash_management` (`id`, `cashier_id`, `start_amount`, `payments`, `payment_refund`, `paid_in`, `paid_out`, `expected_amount`, `actual_cash`, `difference`) VALUES
-(0, 11, 10000, 3130.40, 220.00, 100.00, -10.00, 13000.40, 14000.00, 999.60),
-(0, 11, 10000, 3130.40, 220.00, 100.00, -10.00, 13000.40, 14000.00, 999.60);
+(1, 11, 10000, 3130.40, 220.00, 100.00, -10.00, 13000.40, 14000.00, 999.60),
+(2, 11, 10000, 3130.40, 220.00, 100.00, -10.00, 13000.40, 14000.00, 999.60);
 
 -- --------------------------------------------------------
 
@@ -356,7 +356,7 @@ INSERT INTO `emp` (`userID`, `Fullname`, `AppliedRole`, `Date`, `accessID`) VALU
 --
 
 CREATE TABLE `log` (
-  `id` int(255) NOT NULL,
+  `id` int(11) NOT NULL,
   `action` varchar(60) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `user_id` int(255) NOT NULL
@@ -367,12 +367,13 @@ CREATE TABLE `log` (
 --
 
 INSERT INTO `log` (`id`, `action`, `timestamp`, `user_id`) VALUES
-(0, 'logged in', '2024-06-05 21:44:13', 11),
-(0, 'logged in', '2024-06-05 21:44:13', 11),
-(0, 'Logged out, user_id: 11', '2024-06-05 22:15:44', 11),
-(0, 'logged in', '2024-06-05 22:16:01', 11),
-(0, 'logged in', '2024-06-05 22:48:49', 11),
-(0, 'logged in', '2024-06-06 01:28:42', 11);
+(1, 'logged in', '2024-06-05 21:44:13', 11),
+(2, 'logged in', '2024-06-05 21:44:13', 11),
+(3, 'Logged out, user_id: 11', '2024-06-05 22:15:44', 11),
+(4, 'logged in', '2024-06-05 22:16:01', 11),
+(5, 'logged in', '2024-06-05 22:48:49', 11),
+(6, 'logged in', '2024-06-06 01:28:42', 11),
+(7, 'logged in', '2024-06-06 03:45:41', 11);
 
 -- --------------------------------------------------------
 
@@ -417,7 +418,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `barcode`, `quantity`, `low_stock_quantity`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`) VALUES
-(38, 'Hotdog (Tender Juicy Original)', '8PLFZEU96BXR', '68', '10', 100.00, 110.00, 8, 3, '2024-05-29 17:28:59');
+(38, 'Hotdog (Tender Juicy Original)', '8PLFZEU96BXR', '56', '10', 100.00, 110.00, 8, 3, '2024-05-29 17:28:59');
 
 -- --------------------------------------------------------
 
@@ -438,25 +439,6 @@ CREATE TABLE `receipt` (
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `receipt`
---
-
-INSERT INTO `receipt` (`id`, `sub_total`, `discount`, `tax`, `total`, `pay_thru`, `paid_amount`, `change_amount`, `status`, `date`) VALUES
-('REC17176455239261', 440.00, '5% Student Discount', '12', 468.16, 'Cash', 500.00, 31.84, 'sold', '2024-06-06'),
-('REC17176468303131', 550.00, 'No Discount', '12', 616.00, 'Gcash', 0.00, 0.00, 'sold', '2024-06-06'),
-('REC17176468861370', 330.00, 'No Discount', '12', 369.60, 'Cash', 500.00, 130.40, 'sold', '2024-06-06'),
-('REC17176469850331', 440.00, '5% Student Discount', '12', 468.16, 'Cash', 500.00, 31.84, 'sold', '2024-06-06'),
-('REC17176470108241', 330.00, '10php Summer Discount ', '12', 358.40, 'Cash', 400.00, 41.60, 'sold', '2024-06-06'),
-('REC17176470605760', 110.00, '5% Student Discount', '12', 117.04, 'Cash', 200.00, 82.96, 'sold', '2024-06-06'),
-('REC17176471040482', 110.00, 'No Discount', '12', 123.20, 'Cash', 200.00, 76.80, 'sold', '2024-06-06'),
-('REC17176471342252', 110.00, '5% Student Discount', '12', 117.04, 'Cash', 200.00, 82.96, 'sold', '2024-06-06'),
-('REC17176471709851', 440.00, 'No Discount', '12', 492.80, 'Cash', 500.00, 7.20, 'sold', '2024-06-06'),
-('REC17176477595290', 440.00, '10php Summer Discount ', '12', 481.60, 'Cash', 500.00, 18.40, 'sold', '2024-06-06'),
-('REC17176574925290', 110.00, 'No Discount', '12', 123.20, 'Cash', 2000.00, 1876.80, 'sold', '2024-06-06'),
-('REC17176575634650', 110.00, 'No Discount', '12', 123.20, 'Gcash', 0.00, 0.00, 'sold', '2024-06-06'),
-('REC17176584266401', 110.00, 'No Discount', '12', 123.20, 'Gcash', 0.00, 0.00, 'sold', '2024-06-06');
-
 -- --------------------------------------------------------
 
 --
@@ -466,29 +448,10 @@ INSERT INTO `receipt` (`id`, `sub_total`, `discount`, `tax`, `total`, `pay_thru`
 CREATE TABLE `receipt_item` (
   `id` int(11) NOT NULL,
   `receipt_id` varchar(255) NOT NULL,
-  `item_id` int(11) NOT NULL,
+  `item_id` int(11) UNSIGNED NOT NULL,
   `quantity` int(11) NOT NULL,
   `status` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `receipt_item`
---
-
-INSERT INTO `receipt_item` (`id`, `receipt_id`, `item_id`, `quantity`, `status`) VALUES
-(0, 'REC17176455239261', 38, 4, 'refunded'),
-(0, 'REC17176468303131', 38, 5, 'sold'),
-(0, 'REC17176468861370', 38, 3, 'sold'),
-(0, 'REC17176469850331', 38, 4, 'sold'),
-(0, 'REC17176470108241', 38, 3, 'sold'),
-(0, 'REC17176470605760', 38, 1, 'sold'),
-(0, 'REC17176471040482', 38, 1, 'sold'),
-(0, 'REC17176471342252', 38, 1, 'sold'),
-(0, 'REC17176471709851', 38, 4, 'sold'),
-(0, 'REC17176477595290', 38, 4, 'sold'),
-(0, 'REC17176574925290', 38, 1, 'sold'),
-(0, 'REC17176575634650', 38, 1, 'sold'),
-(0, 'REC17176584266401', 38, 1, 'sold');
 
 -- --------------------------------------------------------
 
@@ -504,14 +467,6 @@ CREATE TABLE `refund_items` (
   `timestamps` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `reason` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `refund_items`
---
-
-INSERT INTO `refund_items` (`id`, `receipt_item_id`, `refund_quantity`, `cashier_id`, `timestamps`, `reason`) VALUES
-(0, 0, 1, 11, '2024-06-05 22:03:28', 'Expired or spoiled product'),
-(0, 0, 1, 11, '2024-06-05 22:05:26', 'Expired or spoiled product');
 
 -- --------------------------------------------------------
 
@@ -771,6 +726,12 @@ ALTER TABLE `audit_trail`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `cash_management`
+--
+ALTER TABLE `cash_management`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
@@ -790,10 +751,22 @@ ALTER TABLE `customer_account`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `discount`
+--
+ALTER TABLE `discount`
+  ADD PRIMARY KEY (`discount_id`);
+
+--
 -- Indexes for table `emp`
 --
 ALTER TABLE `emp`
   ADD PRIMARY KEY (`userID`);
+
+--
+-- Indexes for table `log`
+--
+ALTER TABLE `log`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `media`
@@ -812,6 +785,28 @@ ALTER TABLE `products`
   ADD KEY `media_id` (`media_id`);
 
 --
+-- Indexes for table `receipt`
+--
+ALTER TABLE `receipt`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `receipt_item`
+--
+ALTER TABLE `receipt_item`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `item_id` (`item_id`),
+  ADD KEY `receipt_id` (`receipt_id`);
+
+--
+-- Indexes for table `refund_items`
+--
+ALTER TABLE `refund_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `receipt_item_id` (`receipt_item_id`),
+  ADD KEY `cashier_id` (`cashier_id`);
+
+--
 -- Indexes for table `sales`
 --
 ALTER TABLE `sales`
@@ -819,10 +814,22 @@ ALTER TABLE `sales`
   ADD KEY `product_id` (`product_id`);
 
 --
+-- Indexes for table `tax`
+--
+ALTER TABLE `tax`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `timecards`
 --
 ALTER TABLE `timecards`
   ADD PRIMARY KEY (`timeid`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- Indexes for table `usercredential`
@@ -888,6 +895,12 @@ ALTER TABLE `audit_trail`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
+-- AUTO_INCREMENT for table `cash_management`
+--
+ALTER TABLE `cash_management`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
@@ -912,6 +925,12 @@ ALTER TABLE `emp`
   MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
+-- AUTO_INCREMENT for table `log`
+--
+ALTER TABLE `log`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `media`
 --
 ALTER TABLE `media`
@@ -922,6 +941,18 @@ ALTER TABLE `media`
 --
 ALTER TABLE `products`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+
+--
+-- AUTO_INCREMENT for table `receipt_item`
+--
+ALTER TABLE `receipt_item`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `refund_items`
+--
+ALTER TABLE `refund_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `sales`
@@ -986,6 +1017,20 @@ ALTER TABLE `attendance`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `FK_products` FOREIGN KEY (`categorie_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `receipt_item`
+--
+ALTER TABLE `receipt_item`
+  ADD CONSTRAINT `receipt_item_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `receipt_item_ibfk_2` FOREIGN KEY (`receipt_id`) REFERENCES `receipt` (`id`);
+
+--
+-- Constraints for table `refund_items`
+--
+ALTER TABLE `refund_items`
+  ADD CONSTRAINT `refund_items_ibfk_1` FOREIGN KEY (`receipt_item_id`) REFERENCES `receipt_item` (`id`),
+  ADD CONSTRAINT `refund_items_ibfk_2` FOREIGN KEY (`cashier_id`) REFERENCES `user` (`user_id`);
 
 --
 -- Constraints for table `sales`
