@@ -12,7 +12,8 @@ if(isset($_POST['add_customer'])){
     $address = $_POST['address'];
     $contact = $_POST['contact'];
     $notes = $_POST['notes'];
-    $Barcode = "!". "2024".(rand(0,999999999)); // random barcode
+    $Barcode = $_POST['addBarcode'];
+    // $Barcode = "!". "2024".(rand(0,999999999)); // random barcode
     
     // Handle file upload
     $profile_pic = '';
@@ -107,6 +108,10 @@ if(isset($_POST['add_customer'])){
           <div class="form-group">
             <label for="notes" class="control-label">Notes</label>
             <textarea class="form-control" name="notes" placeholder="Notes"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="Barcode" class="control-label">Barcode</label>
+            <textarea class="form-control" name="addBarcode" placeholder="Barcode"></textarea>
           </div>
           <div class="form-group">
             <label for="profpic" class="control-label">Profile Picture</label>

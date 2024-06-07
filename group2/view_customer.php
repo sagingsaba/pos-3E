@@ -111,8 +111,8 @@ if (isset($_GET['id'])) {
                     <?php endif; ?>
                 </div>
                 <dl>
-                    <dt>Full Name:</dt>
-                    <dd style="text-align: center;"><?php echo $customer['FullName']; ?></dd>
+                    <br>
+                    <dd style="text-align: center; font-size: 20px"><?php echo $customer['FullName']; ?></dd>
 
                     <dt>Email:</dt>
                     <dd><?php echo $customer['Email']; ?></dd>
