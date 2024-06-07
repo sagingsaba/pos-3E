@@ -178,8 +178,8 @@ button:disabled{
 
     <!-- <button id="paylater" disabled>Add to Pay Later</button>
     <button id="opentickets">View Open Tickets</button> -->
-    <button id="toggleButton" class="main-button" onclick="toggleInput()">Banana Card</button>
-    <input type="text" id="bananacard" style="display: none;">
+    <!-- <button id="toggleButton" class="main-button" onclick="toggleInput()">Banana Card</button> -->
+    <!-- <input type="text" id="bananacard" style="display: none;"> -->
     </div>
 
 

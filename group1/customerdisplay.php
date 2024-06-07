@@ -54,6 +54,14 @@ session_start();
         text-align: right;
         color: #555;
     }
+
+    #qr-code {
+            display: block; /* Ensures the margin auto works */
+            margin: auto;
+            width: 300px; /* Set a specific width for the canvas */
+            height: 300px; /* Set a specific height for the canvas */
+            border: 1px solid black; /* Optional: to visualize the canvas border */
+        }
     </style>
 </head>
 <body>
