@@ -370,7 +370,7 @@ totalButton.addEventListener('click', () => {
     const cdsubtotal = document.getElementById('total-value').textContent;
 const cdtotal = document.getElementById('gtotal').textContent;
 const cdvat = vatText;
-const cddiscount =document.getElementById('discount').selectedIndex;
+const cddiscount =document.getElementById('discount').value;
 console.log(cddiscount);
 fetch('cdtotal.php', {
     method: 'POST',
