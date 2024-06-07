@@ -111,7 +111,7 @@ if(isset($_POST['add_customer'])){
           </div>
           <div class="form-group">
             <label for="Barcode" class="control-label">Barcode</label>
-            <textarea class="form-control" name="addBarcode" placeholder="Barcode"></textarea>
+            <input type="text" class="form-control" name="addBarcode" placeholder="Barcode">
           </div>
           <div class="form-group">
             <label for="profpic" class="control-label">Profile Picture</label>
