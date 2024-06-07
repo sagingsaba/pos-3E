@@ -13,7 +13,7 @@ if (isset($_GET['id'])) {
     // Function to delete customer by ID
     function delete_customer_by_id($id) {
         global $pdoConnect;
-        $sql = "DELETE FROM customer_account WHERE id = :id";
+        $sql = "DELETE FROM posfinale.customer_account WHERE id = :id";
         
         try {
             $stmt = $pdoConnect->prepare($sql);

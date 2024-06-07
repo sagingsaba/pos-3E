@@ -16,7 +16,7 @@ if (isset($_GET['id'])) {
     // Function to fetch customer details by ID
     function find_customer_by_id($id) {
         global $pdoConnect;
-        $sql = "SELECT * FROM customer_account WHERE id = :id";
+        $sql = "SELECT * FROM posfinale.customer_account WHERE id = :id";
         
         try {
             $stmt = $pdoConnect->prepare($sql);

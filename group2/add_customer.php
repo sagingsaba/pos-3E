@@ -47,7 +47,7 @@ if(isset($_POST['add_customer'])){
         $session->msg('d', 'Name and Email are required fields.');
         redirect('add_customer.php', false);
     } else {
-        $sql  = "INSERT INTO customer_account (barcode_image, FullName, Email, Address, Contact, Notes, profpic)";
+        $sql  = "INSERT INTO posfinale.customer_account (barcode_image, FullName, Email, Address, Contact, Notes, profpic)";
         $sql .= " VALUES (:barcode, :name, :email, :address, :contact, :notes, :profpic)";
         
         try {

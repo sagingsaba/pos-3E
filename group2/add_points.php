@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Function to find customer by barcode
     function find_customer_by_barcode($barcode) {
         global $pdoConnect;
-        $sql = "SELECT * FROM customer_account WHERE barcode_image = :barcode";
+        $sql = "SELECT * FROM posfinale.customer_account WHERE barcode_image = :barcode";
         
         try {
             $stmt = $pdoConnect->prepare($sql);
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $new_visit_points = $customer['TotalVisits'] + $addvisitpoints;
 
         // Update customer points in the database
-        $sql = "UPDATE customer_account SET LoyaltyPoints = :points, TotalVisits = :addvisitpoints WHERE id = :id";
+        $sql = "UPDATE posfinale.customer_account SET LoyaltyPoints = :points, TotalVisits = :addvisitpoints WHERE id = :id";
         
         try {
             $stmt = $pdoConnect->prepare($sql);

@@ -13,7 +13,7 @@ if (isset($_GET['id'])) {
     // Function to fetch customer details by ID
     function find_customer_by_id($id) {
         global $pdoConnect;
-        $sql = "SELECT * FROM customer_account WHERE id = :id";
+        $sql = "SELECT * FROM posfinale.customer_account WHERE id = :id";
         
         try {
             $stmt = $pdoConnect->prepare($sql);
@@ -67,7 +67,7 @@ if (isset($_GET['id'])) {
         }
 
         // Update customer information in the database
-        $sql = "UPDATE customer_account SET FullName = :name, Email = :email, Address = :address, Contact = :contact, Notes = :notes, profpic = :profpic WHERE id = :id";
+        $sql = "UPDATE posfinale.customer_account SET FullName = :name, Email = :email, Address = :address, Contact = :contact, Notes = :notes, profpic = :profpic WHERE id = :id";
         try {
             $stmt = $pdoConnect->prepare($sql);
             $stmt->execute([

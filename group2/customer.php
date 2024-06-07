@@ -12,7 +12,7 @@ function find_all_customer() {
     $sql = "SELECT c.id, c.FullName as name, c.Email as username, 'Customer' as group_name, 
                    'Active' as status, '' as last_login, c.Address, c.Contact, 
                    c.TotalVisits, c.LoyaltyPoints, c.TotalPurchase, c.Notes, c.profpic
-            FROM customer_account c
+            FROM posfinale.customer_account c
             ORDER BY c.FullName ASC";
     
     try {
