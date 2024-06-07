@@ -141,3 +141,20 @@ function barcode_generator(){
 
   return $barcode;
 }
+
+function display_msg_points($msg = '') {
+  if (is_array($msg) || is_object($msg)) {
+      foreach ($msg as $key => $value) {
+          echo "<div class='alert alert-{$key}'>{$value}</div>";
+      }
+  } elseif (is_string($msg)) {
+      echo "<div class='alert alert-info'>{$msg}</div>";
+  } else {
+      // Handle the case when $msg is not an array, object, or string
+      error_log('Expected array, object, or string, got: ' . gettype($msg));
+      echo "<div class='alert alert-danger'>Unexpected message type</div>";
+  }
+}
+
+
+

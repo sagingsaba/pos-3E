@@ -77,8 +77,6 @@
       </a>
       <ul class="nav submenu">
         <li><a href="customer.php">Manage Customer</a></li>
-        <li><a href="purchasehistory.php">Purchase History</a></li>
-        <li><a href="daily_sales.php">Customer Visits</a> </li>
       </ul>
   </li>
 </ul>

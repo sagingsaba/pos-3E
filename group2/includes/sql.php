@@ -147,6 +147,7 @@ function tableExists($table){
       $result = find_by_sql($sql);
       return $result;
   }
+  
   /*--------------------------------------------------------------*/
   /* Function to update the last log in of a user
   /*--------------------------------------------------------------*/
